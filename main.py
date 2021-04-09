@@ -7,4 +7,3 @@ from main.website import app
 
 
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

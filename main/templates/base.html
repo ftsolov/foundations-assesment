@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/styles.css') }}"
+    />
+  </head>
+  <body class="background center">
+    <a href="/index" class="logo">
+        <img src="main/images/logo.png" alt="Calm logo" />
+    </a>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
