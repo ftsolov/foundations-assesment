@@ -11,7 +11,7 @@
   </head>
   <body class="background center">
     <a href="/index" class="logo">
-        <img src="main/images/logo.png" alt="Calm logo" />
+        <img src="{{ url_for('static',filename='images/logo.png') }}" alt="Calm logo" style="height: 50px;"/>
     </a>
     {% block content %}
     {% endblock %}
