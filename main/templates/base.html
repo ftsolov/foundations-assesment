@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content = initial-scale=1>
     <title>Home</title>
     <link
       rel="stylesheet"
@@ -10,7 +11,7 @@
     />
   </head>
   <body class="background center">
-    <a href="/index" class="logo">
+    <a href="/" class="logo">
         <img src="{{ url_for('static',filename='images/logo.png') }}" alt="Calm logo" style="height: 50px;"/>
     </a>
     {% block content %}
