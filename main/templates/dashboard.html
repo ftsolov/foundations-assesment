@@ -1,4 +1,35 @@
 {% extends "base.html" %} {% block content %}
+<div class="width-wrapper">
+  <div class="header">
+    <div class="text-header">
+      <h2>Diary log</h2>
+      <!--make this dynamic later-->
+      <p style="color: var(--secondary)">3 entries</p>
+    </div>
+    <a href="/new-entry" class="button">+ New entry</a>
+  </div>
 
+  <div class="entry">
+    <div>
+      <p>Title of entry</p>
+      <p style="color: var(--secondary)">13.04.2021</p>
+    </div>
+    <a href="/details" class="button subtle">Details</a>
+  </div>
+  <div class="entry">
+    <div>
+      <p>Title of entry</p>
+      <p style="color: var(--secondary)">13.04.2021</p>
+    </div>
+    <a href="/details" class="button subtle">Details</a>
+  </div>
+  <div class="entry">
+    <div>
+      <p>Title of entry</p>
+      <p style="color: var(--secondary)">13.04.2021</p>
+    </div>
+    <a href="/details" class="button subtle">Details</a>
+  </div>
+</div>
 
 {% endblock %}
