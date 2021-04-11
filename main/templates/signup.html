@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="hero centered">
-  <h2>Sign up</h2>
+  <h2 class="underline">Sign up</h2>
 
   <div class="input-section">
     <label for="username">Username</label
@@ -18,16 +18,13 @@
       class="input"
       autocomplete="off"
     />
-    <p class="small-text" style="text-align: left;">
+    <p class="small-text" style="text-align: left">
       Password should be at least 6 characters and contain at least one number
     </p>
   </div>
-
-  <div class="mt">
-    <a href="#" class="button">Sign Up</a>
-    <p class="small-text mt">or</p>
-    <a href="#" class="button third">Log in</a>
-  </div>
+  <a href="/sign-up" class="button mt">Sign Up</a>
+  <span class="small-text mt">or</span>
+  <a href="/login" class="button third">Log in</a>
 </div>
 
 {% endblock %}

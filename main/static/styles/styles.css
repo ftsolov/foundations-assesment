@@ -4,17 +4,17 @@
 
 :root {
   --white: #f5f6fa;
-  --secondary: #8692B2;
+  --secondary: #8692b2;
   --dark: #1b2130;
   --light-dark: #192034;
-  --accent: #F11262;
+  --accent: #f11262;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   height: 100%;
   font-family: "Nexa", serif;
   color: var(--white);
@@ -31,7 +31,6 @@ h2 {
 
 p {
   line-height: 1.5;
-
 }
 
 a {
@@ -39,8 +38,23 @@ a {
   letter-spacing: 1px;
 }
 
+.underline {
+  position: relative;
+}
+
+.underline:after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-bottom: 5px solid var(--accent);
+  z-index: -1;
+}
+
 .background {
-  background-color: #0D1426;
+  background-color: #0d1426;
   background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5f6fa' fill-opacity='0.03'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -68,16 +82,16 @@ a {
 
 .button {
   background-color: var(--accent);
-  padding: 16px 48px;
+  padding: 1rem 3rem;
   color: white;
   font-size: 1rem;
   text-align: center;
   border-radius: 9999px;
   font-weight: 700;
-  max-width: fit-content;
+  max-width: max-content;
   letter-spacing: 0;
   transition: transform 0.3s;
-  margin: 2rem auto;
+  display: inline-block;
 }
 
 .third {
@@ -92,6 +106,7 @@ a {
   position: absolute;
   top: 50px;
   left: 50px;
+  z-index: 1;
 }
 
 .small-text {
@@ -101,20 +116,20 @@ a {
 }
 
 .mt {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .input {
   border-radius: 8px;
   margin-top: 1rem;
   background: var(--light-dark);
-  padding: 16px;
+  padding: 1rem;
   width: 100%;
   outline: none;
-  transition: border-color 200ms;
+  transition: border-color 150ms;
   border: 1px transparent solid;
   color: var(--white);
-  letter-spacing: 1px;
+  letter-spacing: 0.05rem;
 }
 
 .input:focus {
@@ -129,7 +144,6 @@ a {
   max-width: 350px;
   margin-bottom: 1.5rem;
 }
-
 
 @media only screen and (max-width: 550px) {
   .logo {

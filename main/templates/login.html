@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<div class="hero centered">
+  <h2 class="underline">Log in</h2>
+
+  <div class="input-section">
+    <label for="username">Username</label
+    ><input id="username" type="text" class="input" autocomplete="off" />
+  </div>
+  <div class="input-section">
+    <label for="password">Password</label
+    ><input id="password" type="password" class="input" autocomplete="off" />
+  </div>
+  <a href="/sign-up" class="button mt">Log in</a>
+  <span class="small-text mt">or</span>
+  <a href="/login" class="button third">Sign up</a>
+</div>
+
+{% endblock %}

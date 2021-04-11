@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="hero centered">
   <h1 class="hero-text">
     Your <span style="color: var(--accent)">personal</span> <br />
@@ -9,11 +8,7 @@
     Track your daily mood and look back to see <br />
     how much you've progressed.
   </p>
-  <div class="mt">
-    <a href="/sign-up" class="button">Sign Up</a>
-    <p class="small-text mt">or</p>
-    <a href="/login" class="button third">Log in</a>
-  </div>
+  {% include 'components/sign-up-login-component.html' %}
 </div>
 
 {% endblock %}
