@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div class="hero centered">
+<form id="form" action="/sign-up" method="post" class="hero centered">
   <h2 class="underline">Sign up</h2>
 
   <div class="input-section">
@@ -22,9 +22,9 @@
       Password should be at least 6 characters and contain at least one number
     </p>
   </div>
-  <a href="/dashboard" class="button mt" onclick="password_repeat_check()">Sign Up</a>
+  <button type="submit" class="button mt">Sign Up</button>
   <span class="small-text mt">or</span>
   <a href="/login" class="button third">Log in</a>
-</div>
+</form>
 
 {% endblock %}
