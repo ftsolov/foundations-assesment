@@ -1,3 +1,5 @@
+/*RESETS*/
+
 * {
   box-sizing: border-box;
 }
@@ -18,6 +20,16 @@ body {
   height: 100%;
   font-family: "Nexa", serif;
   color: var(--white);
+}
+
+button {
+  border: none;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: "Nexa", sans-serif;
+  cursor: pointer;
+  outline: none;
 }
 
 h1 {
@@ -199,6 +211,15 @@ p {
   border-radius: 12px;
   margin-bottom: 0.8rem;
 }
+
+/*NEW ENTRY POP-UP*/
+
+.new-entry-wrapper {
+  padding: 2rem;
+
+}
+
+/*MEDIA QUERIES*/
 
 @media only screen and (max-width: 550px) {
   .logo {

@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div class="hero centered">
+<form id="login-form" method="post" action="/login" class="hero centered">
   <h2 class="underline">Log in</h2>
 
   <div class="input-section">
@@ -10,9 +10,9 @@
     <label for="password">Password</label
     ><input id="password" type="password" class="input" autocomplete="off" />
   </div>
-  <a href="/dashboard" class="button mt">Log in</a>
+  <button type="submit" class="button mt">Log in</button>
   <span class="small-text mt">or</span>
   <a href="/sign-up" class="button third">Sign up</a>
-</div>
+</form>
 
 {% endblock %}

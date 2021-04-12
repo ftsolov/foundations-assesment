@@ -4,6 +4,8 @@ from helper_functions import functions
 app = Flask(__name__)
 
 
+# TODO: Import SQLAlchemy library for python for easier database management
+
 @app.route('/')
 def index():
     return render_template('landing.html')
