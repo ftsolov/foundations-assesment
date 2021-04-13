@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% block content %}
-<form id="form" action="/sign-up" method="post" class="hero centered">
+<form id="form" class="hero centered" action="/sign_up" method="POST" >
   <h2 class="underline">Sign up</h2>
 
   <div class="input-section">
     <label for="username">Username</label
-    ><input id="username" type="text" class="input" autocomplete="off" />
+    ><input id="username" type="text" class="input" name="username" autocomplete="off" />
   </div>
   <div class="input-section">
     <label for="password">Password</label
-    ><input id="password" type="password" class="input" autocomplete="off" />
+    ><input id="password" type="password" class="input" name="password" autocomplete="off" />
   </div>
   <div class="input-section">
     <label for="password-repeat">Repeat Password</label
