@@ -1,7 +1,24 @@
 from flask import Flask, request, render_template
-from helper_functions import functions
+# from helper_functions import functions
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
+app.debug = True
+db = SQLAlchemy(app)
+
+
+class Users(db.Model):
+    __tablename__ = "users"
+    userId = db.Column(db.Integer(10), primary_key=True)
+    username = db.Column(db.Integer(10), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+
+    def __init__(self, userId, username, password):
+        self.userID = userId
+        self.username = username
+        self.password = password
 
 
 # TODO: Import SQLAlchemy library for python for easier database management
