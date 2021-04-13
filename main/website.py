@@ -1,5 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for
-from helper_functions.functions import encrypt_password, generate_user_id
+from flask import Flask, request, render_template, redirect, url_for, session
+from helper_functions.functions import encrypt_password, verify_password, generate_user_id
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -51,51 +51,59 @@ def index():
     return render_template('landing.html')
 
 
-@app.route('/sign_up_page')
-def signup_page():
-    # display the login page
-    return render_template('signup.html')
-
-
-@app.route('/sign_up')
+@app.route('/sign-up', methods=['GET', 'POST'])
 def signup():
-    # check if password meets criteria (if not, prompt error)
-    # check if password repeat matches (if not, prompt error)
-    # read post body
-    username = request.form.get("username")
-    password = request.form.get("password")
-    # check if inputs are both filled in and not blank
-    # if not username or not password: <- python code
-    # TODO: Handle error
-    # check if username exists in the database
-    # TODO: Read database
-    # if it exists, prompt error
-    # if it doesnt and everything is good, create a new user entry in the database
-    # TODO: Use UUID to generate unique user ID's and save them to database
-    unique_user_id = generate_user_id()  # creates a random 8 character user ID
-    # TODO: Encrypt password
-    encrypted_password = encrypt_password(password)
-    # TODO: Write credentials to database
-    # return dashboard of the user
-    return render_template('dashboard.html')
+    if request.method == 'POST':
+        # check if password meets criteria (if not, prompt error) done in JS
+        # check if password repeat matches (if not, prompt error) done in JS
+        # read post body
+        username = request.form.get("username")
+        password = request.form.get("password")
+        # check if inputs are both filled in and not blank
+        if not username or not password:
+            return
+        # TODO: Handle error
+        # check if username exists in the database
+        # TODO: Read database
+        # if it exists, prompt error
+        # if it doesnt and everything is good, create a new user entry in the database
+        # TODO: Use UUID to generate unique user ID's and save them to database
+        unique_user_id = generate_user_id()  # creates a random 8 character user ID
+        # TODO: Encrypt password
+        encrypted_password = encrypt_password(password)
+        # TODO: Write credentials to database
+        # return dashboard of the user
+        return render_template('dashboard.html')
+    else:
+        return render_template('signup.html')
 
 
-@app.route('/login_page')
-def login_page():
-    # display the login page
-    return render_template('login.html')
-
-
-@app.route('/login_check')
-def login_check():
-    # read request body
-    # check if inputs are both filled in and not blank
-    # check if username exists in the database
-    # get password from body request and hash it
-    # compare hashed client side password with user password on server
-    # if correct, display dashboard
-    # if wrong, prompt again and display error message
-    return render_template('login.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # read request body
+        username = request.form.get("username")
+        password = request.form.get("password")
+        # check if inputs are both filled in and not blank
+        if not username or not password:
+            return
+        # check if username exists in the database
+        # TODO: Check if username exists in database
+        # obtain hashed password that belongs to the username and store it
+        # TODO: Obtain hashed password that belongs to the username and store it
+        # compare password with hashed password on server
+        password_correct_bool = verify_password(password, hashed_password)
+        # if correct, display dashboard
+        if password_correct_bool:
+            # redirect to dashboard
+            return render_template('dashboard.html')
+        elif not password_correct_bool:
+            # prompt error message
+            # if wrong, prompt again and display error message
+            pass
+    else:
+        # if wrong, prompt again and display error message
+        return render_template('login.html')
 
 
 @app.route('/dashboard')
@@ -103,7 +111,7 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/fetch_daily_entries')
+@app.route('/fetch-daily-entries')
 def fetch_daily_entries():
     pass
 
