@@ -1,6 +1,10 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 # from helper_functions import functions
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from passlib.hash import sha256_crypt
+import uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -12,8 +16,9 @@ db = SQLAlchemy(app)
 class Users(db.Model):
     __tablename__ = "users"
     userId = db.Column(db.Integer(), primary_key=True, nullable=False)
-    username = db.Column(db.String(15), nullable=False)
+    username = db.Column(db.String(15), nullable=False, unique=True)
     password = db.Column(db.String(20), nullable=False)
+    children = relationship("DailyEntries")
 
     def __init__(self, userId, username, password):
         self.userId = userId
@@ -23,10 +28,10 @@ class Users(db.Model):
 
 class DailyEntries(db.Model):
     __tablename__ = "dailyEntries"
-    userId = db.Column(db.Integer(), foreign_key=True, nullable=False)
+    userId = db.Column(db.Integer(), ForeignKey('users.userId'), nullable=False)
     logId = db.Column(db.Integer(), primary_key=True, nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
-    logDate = db.Column(db.DATETIME, nullable=False)
+    logDate = db.Column(db.DateTime, nullable=False)
     logMood = db.Column(db.String(15), nullable=False)
     logRating = db.Column(db.Integer(), nullable=False)
     logDescription = db.Column(db.String(255), nullable=True)
@@ -40,8 +45,6 @@ class DailyEntries(db.Model):
         self.logRating = logRating
         self.logDescription = logDescription
 
-
-# TODO: Import SQLAlchemy library for python for easier database management
 
 @app.route('/')
 def index():
@@ -59,12 +62,22 @@ def signup():
     # check if password meets criteria (if not, prompt error)
     # check if password repeat matches (if not, prompt error)
     # read post body
+    username = request.form.get("username")
+    password = request.form.get("password")
     # check if inputs are both filled in and not blank
+    # if not username or not password: <- python code
+    # TODO: Handle error
     # check if username exists in the database
+    # TODO: Read database
     # if it exists, prompt error
     # if it doesnt and everything is good, create a new user entry in the database
+    # TODO: Use UUID to generate unique user ID's and save them to database
+    unique_user_id = str(uuid.uuid4())[:8]  # creates a random 8 character user ID
+    # TODO: Encrypt password
+    encrypted_password = sha256_crypt.encrypt(password)
+    # TODO: Write credentials to database
     # return dashboard of the user
-    return render_template('signup.html')
+    return render_template('dashboard.html')
 
 
 @app.route('/login_page')
