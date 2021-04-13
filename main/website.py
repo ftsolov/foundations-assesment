@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
-# from helper_functions import functions
+from helper_functions.functions import encrypt_password, generate_user_id
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -72,9 +72,9 @@ def signup():
     # if it exists, prompt error
     # if it doesnt and everything is good, create a new user entry in the database
     # TODO: Use UUID to generate unique user ID's and save them to database
-    unique_user_id = str(uuid.uuid4())[:8]  # creates a random 8 character user ID
+    unique_user_id = generate_user_id()  # creates a random 8 character user ID
     # TODO: Encrypt password
-    encrypted_password = sha256_crypt.encrypt(password)
+    encrypted_password = encrypt_password(password)
     # TODO: Write credentials to database
     # return dashboard of the user
     return render_template('dashboard.html')
