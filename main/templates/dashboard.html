@@ -1,4 +1,45 @@
 {% extends "base.html" %} {% block content %}
+<!--NEW LOG POPUP-->
+<div
+  class="popup"
+  id="popup"
+  style="
+    display: block;
+    opacity: 0;
+    transition: all 400ms ease-out;
+    z-index: -9;
+  "
+>
+  <div class="new-entry-wrapper">
+    <h2 class="underline">New entry</h2>
+    <div class="input-section">
+      <label for="headline">Log headline</label>
+      <input id="headline" type="text" class="input" autocomplete="off" />
+    </div>
+
+    <div class="input-section">
+      <label for="feeling">How did you feel today?</label>
+      <input id="feeling" type="text" class="input" autocomplete="off" />
+    </div>
+
+    <div class="input-section">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        class="input text-area"
+        autocomplete="off"
+        style="height: 200px"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="button mt">Submit</button>
+    <button class="button third" onclick="closeNewEntryOverlay()">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<!----------------->
 <div class="width-wrapper">
   <div class="header">
     <div class="text-header">
@@ -6,7 +47,7 @@
       <!--make this dynamic later-->
       <p style="color: var(--secondary)">3 entries</p>
     </div>
-    <a href="/new-entry" class="button">+ New entry</a>
+    <button onclick="logNewEntryAnimation()" class="button">+ New entry</button>
   </div>
 
   <div class="entry">
@@ -16,6 +57,7 @@
     </div>
     <a href="/details" class="button subtle">Details</a>
   </div>
+
   <div class="entry">
     <div>
       <p>Title of entry</p>
@@ -23,6 +65,7 @@
     </div>
     <a href="/details" class="button subtle">Details</a>
   </div>
+
   <div class="entry">
     <div>
       <p>Title of entry</p>
