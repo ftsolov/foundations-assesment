@@ -11,14 +11,34 @@ db = SQLAlchemy(app)
 
 class Users(db.Model):
     __tablename__ = "users"
-    userId = db.Column(db.Integer(10), primary_key=True)
-    username = db.Column(db.Integer(10), nullable=False)
+    userId = db.Column(db.Integer(), primary_key=True, nullable=False)
+    username = db.Column(db.String(15), nullable=False)
     password = db.Column(db.String(20), nullable=False)
 
     def __init__(self, userId, username, password):
-        self.userID = userId
+        self.userId = userId
         self.username = username
         self.password = password
+
+
+class DailyEntries(db.Model):
+    __tablename__ = "dailyEntries"
+    userId = db.Column(db.Integer(), foreign_key=True, nullable=False)
+    logId = db.Column(db.Integer(), primary_key=True, nullable=False)
+    logTitle = db.Column(db.String(60), nullable=False)
+    logDate = db.Column(db.DATETIME, nullable=False)
+    logMood = db.Column(db.String(15), nullable=False)
+    logRating = db.Column(db.Integer(), nullable=False)
+    logDescription = db.Column(db.String(255), nullable=True)
+
+    def __init__(self, userId, logId, logTitle, logDate, logMood, logRating, logDescription):
+        self.userId = userId
+        self.logId = logId
+        self.logTitle = logTitle
+        self.logDate = logDate
+        self.logMood = logMood
+        self.logRating = logRating
+        self.logDescription = logDescription
 
 
 # TODO: Import SQLAlchemy library for python for easier database management
