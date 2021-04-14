@@ -1,10 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
-from helper_functions.functions import encrypt_password, verify_password, generate_user_id
+from helper_functions.functions import encrypt_password, verify_password, generate_id_key
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from passlib.hash import sha256_crypt
-from datetime import timedelta
+from datetime import timedelta, datetime
 import uuid
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ class DailyEntries(db.Model):
     userId = db.Column(db.String(), ForeignKey('users.userId'), nullable=False)
     logId = db.Column(db.Integer(), primary_key=True, nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
-    logDate = db.Column(db.DateTime, nullable=False)
+    logDate = db.Column(db.DateTime(), nullable=False)
     logMood = db.Column(db.String(15), nullable=False)
     logRating = db.Column(db.Integer(), nullable=False)
     logDescription = db.Column(db.String(255), nullable=True)
@@ -71,7 +71,7 @@ def signup():
         # check if username exists in the database
         existing_user = Users.query.filter_by(username=username).first()  # check if user already exists
         if existing_user is None:  # if user doesnt exist, create a new user in the database
-            unique_user_id = generate_user_id()  # creates a random 8 character user ID
+            unique_user_id = generate_id_key()  # creates a random 8 character user ID
             encrypted_password = encrypt_password(password)
             user_info = Users(userId=unique_user_id, username=username, password=encrypted_password)
             db.session.add(user_info)
@@ -136,6 +136,19 @@ def dashboard():
 @app.route('/fetch-daily-entries')
 def fetch_daily_entries():
     pass
+
+
+@app.route('/submit-new-entry')
+def submit_new_entry():
+    # get input values
+    log_id = generate_id_key()
+    log_title = request.form.get("headline")
+    log_date = datetime.now()
+    log_mood = request.form.get("mood")
+    log_rating = request.form.get("rating")
+    log_description = request.form.get("description")
+    log_info = DailyEntries(logTitle=log_title, logMood=log_mood, logDescription=log_description,
+                            logId=log_id, logRating=log_rating, logDate=log_date)
 
 
 if __name__ == "__main__":
