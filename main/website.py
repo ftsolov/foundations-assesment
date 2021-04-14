@@ -1,15 +1,17 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, flash
 from helper_functions.functions import encrypt_password, verify_password, generate_user_id
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from passlib.hash import sha256_crypt
+from datetime import timedelta
 import uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
 app.debug = True
+app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
 
 
@@ -57,6 +59,7 @@ def signup():
         # check if password meets criteria (if not, prompt error) done in JS
         # check if password repeat matches (if not, prompt error) done in JS
         # read post body
+        session.permanent = True
         username = request.form.get("username")
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
@@ -65,6 +68,16 @@ def signup():
         # TODO: Handle error
         # check if username exists in the database
         # TODO: Read database
+        existing_user = Users.query.filter_by(name=username).first()
+        if existing_user:
+            session["username"] = existing_user.username
+            # TODO: Handle error
+        else:
+            unique_user_id = generate_user_id()  # creates a random 8 character user ID
+            encrypted_password = encrypt_password(password)
+            user_info = Users(unique_user_id, username, encrypted_password)
+            db.session.add(user_info)
+            db.session.commit()
         # if it exists, prompt error
         # if it doesnt and everything is good, create a new user entry in the database
         # TODO: Use UUID to generate unique user ID's and save them to database
@@ -90,9 +103,9 @@ def login():
         # check if username exists in the database
         # TODO: Check if username exists in database
         # obtain hashed password that belongs to the username and store it
-        # TODO: Obtain hashed password that belongs to the username and store it
+        # TODO: Obtain hashed password from server that belongs to the username and store it
         # compare password with hashed password on server
-        password_correct_bool = verify_password(password, hashed_password)
+        password_correct_bool = verify_password(password, server_hashed_password)
         # if correct, display dashboard
         if password_correct_bool:
             # redirect to dashboard
@@ -106,6 +119,15 @@ def login():
         return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    if "user" in session:
+        user = session["user"]
+        flash("You have been logged out.", "info")
+    session.pop("user", None)
+    return redirect(url_for("username"))
+
+
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
@@ -117,4 +139,5 @@ def fetch_daily_entries():
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(host="localhost", port=8080, debug=True)
