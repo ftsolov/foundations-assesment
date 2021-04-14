@@ -66,7 +66,7 @@ def signup():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
-            return
+            return redirect(url_for('signup'))
         # TODO: Handle error
         # check if username exists in the database
         existing_user = Users.query.filter_by(username=username).first()  # check if user already exists
@@ -78,6 +78,7 @@ def signup():
             db.session.commit()
         else:
             session["username"] = existing_user.username
+            return redirect(url_for('login'))
             # TODO: Handle error
         # return dashboard of the user
         return render_template('dashboard.html')
@@ -93,10 +94,17 @@ def login():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
-            return
+            return 
         # check if username exists in the database
         # TODO: Check if username exists in database
-        # obtain hashed password that belongs to the username and store it
+        user_check = Users.query.filter_by(username=username).first()  # check if user already exists
+        print(user_check)
+        if user_check is None:
+            flash("User not found, please try again.")
+        else:
+            pass
+            # obtain hashed password that belongs to the username and store it
+
         # TODO: Obtain hashed password from server that belongs to the username and store it
         # compare password with hashed password on server
         password_correct_bool = verify_password(password, server_hashed_password)
