@@ -94,28 +94,26 @@ def login():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
-            return 
-        # check if username exists in the database
+            return
+            # check if username exists in the database
         # TODO: Check if username exists in database
-        user_check = Users.query.filter_by(username=username).first()  # check if user already exists
-        print(user_check)
-        if user_check is None:
+        user_db = Users.query.filter_by(username=username).first()  # check if user already exists
+
+        if user_db is None:
             flash("User not found, please try again.")
         else:
-            pass
             # obtain hashed password that belongs to the username and store it
-
-        # TODO: Obtain hashed password from server that belongs to the username and store it
-        # compare password with hashed password on server
-        password_correct_bool = verify_password(password, server_hashed_password)
-        # if correct, display dashboard
-        if password_correct_bool:
-            # redirect to dashboard
-            return render_template('dashboard.html')
-        elif not password_correct_bool:
-            # prompt error message
-            # if wrong, prompt again and display error message
-            pass
+            server_hashed_password = user_db.password
+            # compare password with hashed password on server
+            password_correct_bool = verify_password(password, server_hashed_password)
+            # if correct, display dashboard
+            if password_correct_bool:
+                # redirect to dashboard
+                return render_template('dashboard.html')
+            elif not password_correct_bool:
+                # prompt error message
+                # if wrong, prompt again and display error message
+                pass
     else:
         # if wrong, prompt again and display error message
         return render_template('login.html')
