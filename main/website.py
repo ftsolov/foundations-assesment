@@ -14,7 +14,7 @@ app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
 
-app.secret_key = "pasta"
+app.secret_key = "safari"
 
 
 class Users(db.Model):
