@@ -22,7 +22,7 @@ document.getElementById("form").addEventListener("submit", (event) => {
 });
 
 function checkPasswordSecurity(password) {
-  return password.length >= 8 && /\d/.test(password);
+  return password.length >= 6 && /\d/.test(password);
 }
 
 function resetPasswordInputs() {

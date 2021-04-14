@@ -14,12 +14,14 @@ app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
 
+app.secret_key = "pasta"
+
 
 class Users(db.Model):
     __tablename__ = "users"
-    userId = db.Column(db.Integer(), primary_key=True, nullable=False)
-    username = db.Column(db.String(15), nullable=False, unique=True)
-    password = db.Column(db.String(20), nullable=False)
+    userId = db.Column(db.String(), primary_key=True, nullable=False)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(), nullable=False)
     children = relationship("DailyEntries")
 
     def __init__(self, userId, username, password):
@@ -30,7 +32,7 @@ class Users(db.Model):
 
 class DailyEntries(db.Model):
     __tablename__ = "dailyEntries"
-    userId = db.Column(db.Integer(), ForeignKey('users.userId'), nullable=False)
+    userId = db.Column(db.String(), ForeignKey('users.userId'), nullable=False)
     logId = db.Column(db.Integer(), primary_key=True, nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
     logDate = db.Column(db.DateTime, nullable=False)
@@ -67,24 +69,16 @@ def signup():
             return
         # TODO: Handle error
         # check if username exists in the database
-        # TODO: Read database
-        existing_user = Users.query.filter_by(name=username).first()
-        if existing_user:
-            session["username"] = existing_user.username
-            # TODO: Handle error
-        else:
+        existing_user = Users.query.filter_by(username=username).first()  # check if user already exists
+        if existing_user is None:  # if user doesnt exist, create a new user in the database
             unique_user_id = generate_user_id()  # creates a random 8 character user ID
             encrypted_password = encrypt_password(password)
-            user_info = Users(unique_user_id, username, encrypted_password)
+            user_info = Users(userId=unique_user_id, username=username, password=encrypted_password)
             db.session.add(user_info)
             db.session.commit()
-        # if it exists, prompt error
-        # if it doesnt and everything is good, create a new user entry in the database
-        # TODO: Use UUID to generate unique user ID's and save them to database
-        unique_user_id = generate_user_id()  # creates a random 8 character user ID
-        # TODO: Encrypt password
-        encrypted_password = encrypt_password(password)
-        # TODO: Write credentials to database
+        else:
+            session["username"] = existing_user.username
+            # TODO: Handle error
         # return dashboard of the user
         return render_template('dashboard.html')
     else:
