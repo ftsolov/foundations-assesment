@@ -3,9 +3,7 @@ from helper_functions.functions import encrypt_password, verify_password, genera
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from passlib.hash import sha256_crypt
 from datetime import timedelta, datetime
-import uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -16,6 +14,8 @@ db = SQLAlchemy(app)
 
 app.secret_key = "safari"
 
+
+# TODO: ENCRYPT ENTRY DATA
 
 class Users(db.Model):
     __tablename__ = "users"
@@ -66,8 +66,8 @@ def signup():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
+            # TODO: FLASH ERROR (?)
             return redirect(url_for('signup'))
-        # TODO: Handle error
         # check if username exists in the database
         existing_user = Users.query.filter_by(username=username).first()  # check if user already exists
         if existing_user is None:  # if user doesnt exist, create a new user in the database
@@ -79,8 +79,9 @@ def signup():
         else:
             session["username"] = existing_user.username
             return redirect(url_for('login'))
-            # TODO: Handle error
+            # TODO: HANDLE ERROR
         # return dashboard of the user
+        # TODO: ONLY RETURN THE USER'S DASHBOARD INFO
         return render_template('dashboard.html')
     else:
         return render_template('signup.html')
@@ -123,6 +124,7 @@ def login():
 def logout():
     if "user" in session:
         user = session["user"]
+        # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
         flash("You have been logged out.", "info")
     session.pop("user", None)
     return redirect(url_for("username"))
@@ -130,11 +132,13 @@ def logout():
 
 @app.route('/dashboard')
 def dashboard():
+    # TODO: FIGURE OUT HOW TO DISPLAY ENTRIES FROM A JSON
     return render_template('dashboard.html')
 
 
 @app.route('/fetch-daily-entries')
 def fetch_daily_entries():
+    # TODO: FIGURE OUT HOW TO FETCH THE ENTRIES OF THE USER
     pass
 
 
@@ -147,8 +151,9 @@ def submit_new_entry():
     log_mood = request.form.get("mood")
     log_rating = request.form.get("rating")
     log_description = request.form.get("description")
+    # TODO: FIGURE OUT HOW TO PASS IN USER ID
     log_info = DailyEntries(logTitle=log_title, logMood=log_mood, logDescription=log_description,
-                            logId=log_id, logRating=log_rating, logDate=log_date)
+                            logId=log_id, logRating=log_rating, logDate=log_date, userId=user_id)
 
 
 if __name__ == "__main__":
