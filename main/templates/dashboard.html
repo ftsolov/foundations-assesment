@@ -3,32 +3,44 @@
 <div
   class="popup"
   id="popup"
-  style="
-    display: block;
-    opacity: 0;
-    transition: all 400ms ease-out;
-    z-index: -9;
-  "
+  style="display: none; opacity: 0; transition: all 200ms ease-out"
 >
   <form class="new-entry-wrapper">
     <h2 class="underline">New entry</h2>
     <div class="flex-horizontal">
       <div class="input-section" style="margin-right: 2rem">
-      <label for="headline">Entry title</label>
-      <input id="headline" type="text" class="input" autocomplete="off" />
-    </div>
+        <label for="headline">Entry title</label>
+        <input
+          id="headline"
+          name="headline"
+          type="text"
+          class="input"
+          autocomplete="off"
+        />
+      </div>
 
-    <div class="input-section">
-      <label for="feeling">How did you feel today?</label>
-      <input id="feeling" type="text" class="input" autocomplete="off" />
+      <div class="input-section">
+        <label for="mood">How did you feel today?</label>
+        <input
+          id="mood"
+          name="mood"
+          type="text"
+          class="input"
+          autocomplete="off"
+        />
+      </div>
     </div>
-    </div>
-
 
     <div class="text-area-section">
-      <label for="description">Description <span style="color:var(--secondary); font-size: 0.7rem">(Optional)</span></label>
+      <label for="description"
+        >Description
+        <span style="color: var(--secondary); font-size: 0.7rem"
+          >(Optional)</span
+        ></label
+      >
       <textarea
         id="description"
+        name="description"
         class="input text-area"
         autocomplete="off"
         style="height: 200px"
@@ -36,13 +48,19 @@
     </div>
 
     <button type="submit" class="button mt">Submit</button>
-    <button class="button third" onclick="closeNewEntryOverlay()">
+    <button
+      class="button third"
+      style="color: var(--secondary)"
+      onclick="logNewEntryAnimation()"
+    >
       Cancel
     </button>
   </form>
+  <div class="popup-bg" onclick="logNewEntryAnimation()"></div>
 </div>
 
 <!----------------->
+
 <div class="width-wrapper">
   <div class="header">
     <div class="text-header">
@@ -50,7 +68,13 @@
       <!--make this dynamic later-->
       <p style="color: var(--secondary)">3 entries</p>
     </div>
-    <button onclick="logNewEntryAnimation()" class="button" title="Add new entry">+ New entry</button>
+    <button
+      onclick="logNewEntryAnimation()"
+      class="button"
+      title="Add new entry"
+    >
+      + New entry
+    </button>
   </div>
 
   <div class="entry">

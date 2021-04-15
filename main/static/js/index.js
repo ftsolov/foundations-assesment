@@ -33,19 +33,14 @@ function resetPasswordInputs() {
 
 function logNewEntryAnimation() {
   let popup = document.getElementById("popup");
-  if (popup.style.display === "block") {
-    popup.style.opacity = "1";
-    popup.style.zIndex = "10";
-  } else if (popup.style.display === "none") {
-    popup.style.opacity = "1";
-    popup.style.zIndex = "10";
+  if (popup.style.display === "none") {
+    popup.style.display = "block";
+    setTimeout(function(){popup.style.opacity = "1";
+    console.log("hey")}, 100)
+  } else if (popup.style.display === "block") {
+    popup.style.opacity = "0";
+    setTimeout(function(){popup.style.display = "none"}, 200)
   }
+  // popup.style === "none" ? true : false;
 }
 
-function closeNewEntryOverlay() {
-  let popup = document.getElementById("popup");
-  if (popup.style.display === "block") {
-    popup.style.opacity = "0";
-    popup.style.zIndex = "-10";
-  }
-}
