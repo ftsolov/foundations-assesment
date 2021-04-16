@@ -28,5 +28,5 @@ def verify_password(form_password, encrypted_password):
     return sha256_crypt.verify(form_password, encrypted_password)
 
 
-def generate_user_id():
+def generate_id_key():
     return str(uuid.uuid4())[:8]
