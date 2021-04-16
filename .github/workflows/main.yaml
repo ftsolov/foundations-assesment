@@ -38,7 +38,7 @@ jobs:
         echo "  DB_PASSWORD: \"${{ secrets.PRODUCTION_DATABASE_PASSWORD }}\" " >> app.yaml
         more app.yaml
     - name: Deploy to Google App Engine
-      uses: google-github-actions/deploy-appengine@calm_app
+      uses: google-github-actions/deploy-appengine@main
       with:
         credentials: ${{ secrets.GAE_SA_KEY }}
     - name: Cleanup Old Versions on Google App Engine 
