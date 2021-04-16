@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
-from helper_functions.functions import encrypt_password, verify_password, generate_id_key
+from calm_app.helper_functions.functions import encrypt_password, verify_password, generate_id_key
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -152,8 +152,8 @@ def submit_new_entry():
     log_rating = request.form.get("rating")
     log_description = request.form.get("description")
     # TODO: FIGURE OUT HOW TO PASS IN USER ID
-    log_info = DailyEntries(logTitle=log_title, logMood=log_mood, logDescription=log_description,
-                            logId=log_id, logRating=log_rating, logDate=log_date, userId=user_id)
+    # log_info = DailyEntries(logTitle=log_title, logMood=log_mood, logDescription=log_description,
+    #                         logId=log_id, logRating=log_rating, logDate=log_date, userId=user_id)
 
 
 if __name__ == "__main__":
