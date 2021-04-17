@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
+from flask_session import Session
 from calm_app.helper_functions.functions import encrypt_password, verify_password, generate_id_key
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
@@ -6,16 +7,23 @@ from sqlalchemy.orm import relationship
 from datetime import timedelta, datetime
 
 app = Flask(__name__)
+app.secret_key = "safari"
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
 
-app.secret_key = "safari"
+Session(app)
 
+
+@app.template_filter()
+def format_date(date: datetime):
+    return f"{date.day:02d}.{date.month:02d}.{date.year} {date.hour:02d}:{date.minute:02d}"
 
 # TODO: ENCRYPT ENTRY DATA
+
 
 class Users(db.Model):
     __tablename__ = "users"
@@ -33,7 +41,7 @@ class Users(db.Model):
 class DailyEntries(db.Model):
     __tablename__ = "dailyEntries"
     userId = db.Column(db.String(), ForeignKey('users.userId'), nullable=False)
-    logId = db.Column(db.Integer(), primary_key=True, nullable=False)
+    logId = db.Column(db.String(), primary_key=True, nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
     logDate = db.Column(db.DateTime(), nullable=False)
     logMood = db.Column(db.String(15), nullable=False)
@@ -76,19 +84,22 @@ def signup():
             user_info = Users(userId=unique_user_id, username=username, password=encrypted_password)
             db.session.add(user_info)
             db.session.commit()
+            session["userId"] = user_info.userId
+
+            return redirect(url_for('dashboard'))
         else:
             session["username"] = existing_user.username
             return redirect(url_for('login'))
             # TODO: HANDLE ERROR
-        # return dashboard of the user
-        # TODO: ONLY RETURN THE USER'S DASHBOARD INFO
-        return render_template('dashboard.html')
     else:
         return render_template('signup.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    user_id = session.get("userId")
+    if user_id:
+        return redirect(url_for("dashboard"))
     if request.method == 'POST':
         # read request body
         username = request.form.get("username")
@@ -109,9 +120,9 @@ def login():
             password_correct_bool = verify_password(password, server_hashed_password)
             # if correct, display dashboard
             if password_correct_bool:
-                # redirect to dashboard
-                return render_template('dashboard.html')
-            elif not password_correct_bool:
+                session["userId"] = user_db.userId
+                return redirect(url_for('dashboard'))
+            else:
                 # prompt error message
                 # if wrong, prompt again and display error message
                 pass
@@ -123,17 +134,21 @@ def login():
 @app.route('/logout')
 def logout():
     if "user" in session:
-        user = session["user"]
         # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
         flash("You have been logged out.", "info")
-    session.pop("user", None)
+    session.pop("userId", None)
     return redirect(url_for("username"))
 
 
 @app.route('/dashboard')
 def dashboard():
+    user_id = session.get("userId")
+    if user_id is None:
+        return redirect(url_for("login"))
     # TODO: FIGURE OUT HOW TO DISPLAY ENTRIES FROM A JSON
-    return render_template('dashboard.html')
+
+    entries = DailyEntries.query.filter_by(userId=user_id)
+    return render_template('dashboard.html', entries=list(entries))
 
 
 @app.route('/fetch-daily-entries')
@@ -142,7 +157,7 @@ def fetch_daily_entries():
     pass
 
 
-@app.route('/submit-new-entry')
+@app.route('/submit-new-entry', methods=["POST"])
 def submit_new_entry():
     # get input values
     log_id = generate_id_key()
