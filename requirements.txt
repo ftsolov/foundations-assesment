@@ -1,14 +1,16 @@
 attrs==20.3.0
 autopep8==1.5.4
+cachelib==0.1.1
 click==7.1.2
 flake8==3.8.4
 Flask==1.1.2
 Flask-API==2.0
+Flask-Session==0.3.2
 Flask-SQLAlchemy==2.5.1
 greenlet==1.0.0
 iniconfig==1.1.1
 itsdangerous==1.1.0
-Jinja2==2.11.3
+Jinja2==2.11.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
 packaging==20.7
