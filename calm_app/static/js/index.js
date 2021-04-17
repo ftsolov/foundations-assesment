@@ -40,7 +40,7 @@ function logNewEntryAnimation() {
   } else if (popup.style.display === "block") {
     popup.style.opacity = "0";
     setTimeout(function(){popup.style.display = "none"}, 200)
+    document.getElementById("title-entry").value = "";
   }
-  // popup.style === "none" ? true : false;
 }
 
