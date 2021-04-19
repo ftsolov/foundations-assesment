@@ -333,6 +333,33 @@ p {
   padding: 18px 30px;
 }
 
+.message {
+  padding: 16px 30px;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.success {
+  background: #173220;
+  color: #bdfec6;
+  border: 2px solid #2c6435;
+}
+
+.error {
+  background: #300106;
+  border: 2px solid #560e13;
+  color: #fc969a;
+}
+
+.logout {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border-radius: 9999px;
+  background-color: #1e2840;
+}
+
 /*MEDIA QUERIES*/
 
 @media only screen and (max-width: 550px) {
