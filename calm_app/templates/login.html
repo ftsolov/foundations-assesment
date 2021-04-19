@@ -1,14 +1,29 @@
 {% extends "base.html" %} {% block content %}
 <form id="login-form" method="POST" action="/login" class="hero centered">
   <h2 class="underline">Log in</h2>
-
+  {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in
+  messages %}
+  <p class="message success">{{ msg }}</p>
+  {% endfor %} {% endif %} {% endwith %}
   <div class="input-section">
     <label for="username">Username</label
-    ><input id="username" type="text" class="input" name="username" autocomplete="off" />
+    ><input
+      id="username"
+      type="text"
+      class="input"
+      name="username"
+      autocomplete="off"
+    />
   </div>
   <div class="input-section">
     <label for="password">Password</label
-    ><input id="password" type="password" class="input" name="password" autocomplete="off" />
+    ><input
+      id="password"
+      type="password"
+      class="input"
+      name="password"
+      autocomplete="off"
+    />
   </div>
   <button type="submit" class="button mt">Log in</button>
   <span class="small-text mt">or</span>
