@@ -101,12 +101,14 @@ def login():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
-            return
+            flash("No entry data found, please fill in carefully.", 'error')
+            return redirect(url_for("login"))
             # check if username exists in the database
         user_db = Users.query.filter_by(username=username).first()  # check if user already exists
 
         if user_db is None:
-            flash("User not found, please try again.")
+            flash("User not found, please try again.", 'error')
+            return redirect(url_for("login"))
         else:
             # obtain hashed password that belongs to the username and store it
             server_hashed_password = user_db.password
@@ -128,7 +130,7 @@ def login():
 @app.route('/logout')
 def logout():
     # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
-    flash("You have been logged out.", "info")
+    flash("You have been logged out.", "success")
     session.pop("userId", None)
     return redirect(url_for("login"))
 
