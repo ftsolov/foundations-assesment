@@ -3,15 +3,15 @@
   <h2 class="underline">Sign up</h2>
 
   <div class="input-section">
-    <label for="username">Username</label
+    <label for="username" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/user.svg') }}" alt="User Icon">Username</label
     ><input id="username" type="text" class="input" name="username" autocomplete="off" />
   </div>
   <div class="input-section">
-    <label for="password">Password</label
+    <label for="password" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/lock.svg') }}" alt="Password icon">Password</label
     ><input id="password" type="password" class="input" name="password" autocomplete="off" />
   </div>
   <div class="input-section">
-    <label for="password-repeat">Repeat Password</label
+    <label for="password-repeat" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/lock.svg') }}" alt="Password icon repeat">Repeat Password</label
     ><input
       id="password-repeat"
       type="password"
