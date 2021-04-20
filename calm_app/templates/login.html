@@ -6,18 +6,20 @@
   <p class="message success">{{ msg }}</p>
   {% endfor %} {% endif %} {% endwith %}
   <div class="input-section">
-    <label for="username">Username</label
+    <label for="username" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/user.svg') }}" alt="User Icon">Username</label
     ><input
       id="username"
       type="text"
       class="input"
       name="username"
+      placeholder="Username"
       autocomplete="off"
     />
   </div>
   <div class="input-section">
-    <label for="password">Password</label
+    <label class="label-auth" for="password"><img class="icon-auth" src="{{ url_for('static', filename='icons/lock.svg') }}" alt="Password icon">Password</label
     ><input
+      placeholder="Password"
       id="password"
       type="password"
       class="input"
