@@ -1,12 +1,17 @@
 {% extends "base.html" %} {% block content %}
-  <!--NEW LOG POPUP-->
-  <div
-      class="popup"
-      id="popup"
-      style="display: none; opacity: 0; transition: all 200ms ease-out"
-  >
-    <form class="new-entry-wrapper">
-      <div class="flex-horizontal card-title">
+<!--NEW LOG POPUP-->
+<button onclick="location.href='/logout'" title="Log Out" class="button subtle logout"
+  ><img src="{{ url_for('static', filename='icons/logout.svg') }}" alt="Log out"
+/></button>
+
+<div
+  class="popup"
+  id="popup"
+  style="display: none; opacity: 0; transition: all 200ms ease-out"
+>
+  <form class="new-entry-wrapper">
+    <div class="flex-horizontal card-title">
+      <label>
         <select class="emoji-container" name="emoji">
           <option value="happy">😊</option>
           <option value="angry">😡</option>
@@ -17,103 +22,104 @@
           <option value="smart">🧠</option>
           <option value="celebrate">🥳</option>
         </select>
+      </label>
+      <label for="title-entry"></label>
+      <input
+        type="text"
+        placeholder="Enter title here..."
+        class="title-entry"
+        id="title-entry"
+      />
+    </div>
+    <div class="flex-horizontal">
+      <div class="input-section" style="margin-right: 2rem">
+        <label for="headline">How did you feel today?</label>
         <input
-            type="text"
-            placeholder="Enter title here..."
-            class="title-entry"
-            id="title-entry"
+          id="headline"
+          name="headline"
+          type="text"
+          class="input"
+          autocomplete="off"
         />
       </div>
-      {#
-    <h2 class="underline">New entry</h2>
-    #}
-      <div class="flex-horizontal">
-        <div class="input-section" style="margin-right: 2rem">
-          <label for="headline">How did you feel today?</label>
-          <input
-              id="headline"
-              name="headline"
-              type="text"
-              class="input"
-              autocomplete="off"
-          />
-        </div>
 
-        <div class="input-section">
-          <label for="mood">How would you rate your day?</label>
-          <input
-              id="mood"
-              name="mood"
-              type="text"
-              class="input"
-              autocomplete="off"
-          />
-        </div>
+      <div class="input-section">
+        <label for="mood">How would you rate your day?</label>
+        <input
+          id="mood"
+          name="mood"
+          type="text"
+          class="input"
+          autocomplete="off"
+        />
       </div>
-
-      <div class="text-area-section">
-        <label for="description"
-        >Description
-          <span style="color: var(--secondary); font-size: 0.7rem"
-          >(Optional)</span
-          ></label
-        >
-        <textarea
-            id="description"
-            name="description"
-            class="input text-area"
-            autocomplete="off"
-            style="height: 200px"
-        ></textarea>
-      </div>
-
-      <button type="submit" class="button mt">Submit</button>
-      <button
-          class="button third"
-          style="color: var(--secondary)"
-          onclick="logNewEntryAnimation()"
-      >
-        Cancel
-      </button>
-    </form>
-    <div class="popup-bg" onclick="logNewEntryAnimation()"></div>
-  </div>
-
-  <!----------------->
-
-  <div class="width-wrapper">
-    <div class="header">
-      <div class="text-header">
-        <h2>Diary log</h2>
-        <!--make this dynamic later-->
-        {% if entries | length == 0 %}
-          <p style="color: var(--secondary)">No entries</p>
-        {% elif entries | length == 1 %}
-          <p style="color: var(--secondary)">1 entry</p>
-        {% else %}
-          <p style="color: var(--secondary)">{{ entries | length }} entries</p>
-        {% endif %}
-      </div>
-      <button
-          onclick="logNewEntryAnimation()"
-          class="button"
-          title="Add new entry"
-      >
-        + New entry
-      </button>
     </div>
-  {% if entries | length == 0 %}
-    <div class="no-entries">No entries found 💩</div>
-  {% else %}
-    {% for entry in entries %}
-      <div class="entry" id="entry.logId">
-        <div>
-          <p>{{ entry.logTitle }}</p>
-          <p style="color: var(--secondary)">{{ entry.logDate | format_date }}</p>
-        </div>
-        <a href="/details?id={{ entry.logId }}" class="button subtle" title="View details">Details</a>
-      </div>
-    {% endfor %}
-  {% endif %}
 
-{% endblock %}
+    <div class="text-area-section">
+      <label for="description"
+        >Description
+        <span style="color: var(--secondary); font-size: 0.7rem"
+          >(Optional)</span
+        ></label
+      >
+      <textarea
+        id="description"
+        name="description"
+        class="input text-area"
+        autocomplete="off"
+        style="height: 200px"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="button mt">Submit</button>
+    <button
+      class="button third"
+      style="color: var(--secondary)"
+      onclick="logNewEntryAnimation()"
+    >
+      Cancel
+    </button>
+  </form>
+  <div class="popup-bg" onclick="logNewEntryAnimation()"></div>
+</div>
+
+<!----------------->
+
+<div class="width-wrapper">
+  <div class="header">
+    <div class="text-header">
+      <h2>Diary log</h2>
+      <!--make this dynamic later-->
+      {% if entries | length == 0 %}
+      <p style="color: var(--secondary)">No entries</p>
+      {% elif entries | length == 1 %}
+      <p style="color: var(--secondary)">1 entry</p>
+      {% else %}
+      <p style="color: var(--secondary)">{{ entries | length }} entries</p>
+      {% endif %}
+    </div>
+    <button
+      onclick="logNewEntryAnimation()"
+      class="button"
+      title="Add new entry"
+    ><img class="icon-auth" src="{{ url_for('static', filename='icons/plus.svg') }}" alt="plus">
+      New entry
+    </button>
+  </div>
+  {% if entries | length == 0 %}
+  <div class="no-entries">No entries found 💩</div>
+  {% else %} {% for entry in entries %}
+  <div class="entry" id="entry.logId">
+    <div>
+      <p>{{ entry.logTitle }}</p>
+      <p style="color: var(--secondary)">{{ entry.logDate | format_date }}</p>
+    </div>
+    <a
+      href="/details?id={{ entry.logId }}"
+      class="button subtle"
+      title="View details"
+      >Details</a
+    >
+  </div>
+  {% endfor %} {% endif %} {% endblock %}
+</div>
