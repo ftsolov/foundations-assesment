@@ -9,34 +9,38 @@
   id="popup"
   style="display: none; opacity: 0; transition: all 200ms ease-out"
 >
-  <form class="new-entry-wrapper">
+  <form method="POST" action="/submit-new-entry" class="new-entry-wrapper">
     <div class="flex-horizontal card-title">
       <label>
-        <select class="emoji-container" name="emoji">
+        <select class="emoji-container" name="emoji" id="emoji">
           <option value="happy">😊</option>
-          <option value="angry">😡</option>
           <option value="sad">😔</option>
+          <option value="stressed">😰</option>
+          <option value="angry">😡</option>
           <option value="sleepy">😴</option>
           <option value="loved">🥰</option>
+          <option value="celebrate">🥳</option>
           <option value="poop">💩</option>
           <option value="smart">🧠</option>
-          <option value="celebrate">🥳</option>
+          <option value="rainbow">🌈</option>
         </select>
       </label>
-      <label for="title-entry"></label>
+      <label for="log-title"></label>
       <input
         type="text"
+        name="log-title"
+        autocomplete="off"
         placeholder="Enter title here..."
         class="title-entry"
-        id="title-entry"
+        id="log-title"
       />
     </div>
     <div class="flex-horizontal">
       <div class="input-section" style="margin-right: 2rem">
-        <label for="headline">How did you feel today?</label>
+        <label for="mood">How did you feel today?</label>
         <input
-          id="headline"
-          name="headline"
+          id="mood"
+          name="mood"
           type="text"
           class="input"
           autocomplete="off"
@@ -44,10 +48,10 @@
       </div>
 
       <div class="input-section">
-        <label for="mood">How would you rate your day?</label>
+        <label for="rating">How would you rate your day?</label>
         <input
-          id="mood"
-          name="mood"
+          id="rating"
+          name="rating"
           type="text"
           class="input"
           autocomplete="off"
@@ -74,6 +78,7 @@
     <button type="submit" class="button mt">Submit</button>
     <button
       class="button third"
+      type="button"
       style="color: var(--secondary)"
       onclick="logNewEntryAnimation()"
     >
@@ -109,7 +114,7 @@
   {% if entries | length == 0 %}
   <div class="no-entries">No entries found 💩</div>
   {% else %} {% for entry in entries %}
-  <div class="entry" id="entry.logId">
+  <div class="entry" id="{{ entry.logId }}">
     <div>
       <p>{{ entry.logTitle }}</p>
       <p style="color: var(--secondary)">{{ entry.logDate | format_date }}</p>

@@ -18,13 +18,6 @@ db = SQLAlchemy(app)
 Session(app)
 
 
-@app.template_filter()
-def format_date(date: datetime):
-    return f"{date.day:02d}.{date.month:02d}.{date.year} {date.hour:02d}:{date.minute:02d}"
-
-# TODO: ENCRYPT ENTRY DATA
-
-
 class Users(db.Model):
     __tablename__ = "users"
     userId = db.Column(db.String(), primary_key=True, nullable=False)
@@ -42,15 +35,17 @@ class DailyEntries(db.Model):
     __tablename__ = "dailyEntries"
     userId = db.Column(db.String(), ForeignKey('users.userId'), nullable=False)
     logId = db.Column(db.String(), primary_key=True, nullable=False)
+    logEmoji = db.Column(db.String(), nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
     logDate = db.Column(db.DateTime(), nullable=False)
     logMood = db.Column(db.String(15), nullable=False)
     logRating = db.Column(db.Integer(), nullable=False)
     logDescription = db.Column(db.String(255), nullable=True)
 
-    def __init__(self, userId, logId, logTitle, logDate, logMood, logRating, logDescription):
+    def __init__(self, userId, logId, logEmoji, logTitle, logDate, logMood, logRating, logDescription):
         self.userId = userId
         self.logId = logId
+        self.logEmoji = logEmoji
         self.logTitle = logTitle
         self.logDate = logDate
         self.logMood = logMood
@@ -108,7 +103,6 @@ def login():
         if not username or not password:
             return
             # check if username exists in the database
-        # TODO: Check if username exists in database
         user_db = Users.query.filter_by(username=username).first()  # check if user already exists
 
         if user_db is None:
@@ -133,11 +127,10 @@ def login():
 
 @app.route('/logout')
 def logout():
-    if "user" in session:
-        # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
-        flash("You have been logged out.", "info")
+    # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
+    flash("You have been logged out.", "info")
     session.pop("userId", None)
-    return redirect(url_for("username"))
+    return redirect(url_for("login"))
 
 
 @app.route('/dashboard')
@@ -145,30 +138,45 @@ def dashboard():
     user_id = session.get("userId")
     if user_id is None:
         return redirect(url_for("login"))
-    # TODO: FIGURE OUT HOW TO DISPLAY ENTRIES FROM A JSON
+    else:
+        entries = DailyEntries.query.filter_by(userId=user_id)
+        return render_template('dashboard.html', entries=list(entries))
 
-    entries = DailyEntries.query.filter_by(userId=user_id)
-    return render_template('dashboard.html', entries=list(entries))
 
-
-@app.route('/fetch-daily-entries')
-def fetch_daily_entries():
-    # TODO: FIGURE OUT HOW TO FETCH THE ENTRIES OF THE USER
-    pass
+#
+# @app.route('/fetch-daily-entries')
+# def fetch_daily_entries():
+#     # TODO: FIGURE OUT HOW TO FETCH THE ENTRIES OF THE USER
+#     pass
 
 
 @app.route('/submit-new-entry', methods=["POST"])
 def submit_new_entry():
     # get input values
     log_id = generate_id_key()
-    log_title = request.form.get("headline")
+    log_title = request.form.get("log-title")
+    log_emoji = request.form.get("emoji")
     log_date = datetime.now()
     log_mood = request.form.get("mood")
     log_rating = request.form.get("rating")
     log_description = request.form.get("description")
+    user_id = session.get("userId")
     # TODO: FIGURE OUT HOW TO PASS IN USER ID
-    # log_info = DailyEntries(logTitle=log_title, logMood=log_mood, logDescription=log_description,
-    #                         logId=log_id, logRating=log_rating, logDate=log_date, userId=user_id)
+    log_info = DailyEntries(userId=user_id, logId=log_id, logEmoji=log_emoji, logTitle=log_title, logDate=log_date,
+                            logMood=log_mood, logRating=log_rating, logDescription=log_description)
+    db.session.add(log_info)
+    db.session.commit()
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/details?id=<log_id>')
+def show_entry_details(log_id):
+    return render_template('entrydetails.html', entry_data=DailyEntries.query.filter_by(logId=log_id))
+
+
+@app.template_filter()
+def format_date(date: datetime):
+    return f"{date.day:02d}.{date.month:02d}.{date.year},  {date.hour:02d}:{date.minute:02d}"
 
 
 if __name__ == "__main__":
