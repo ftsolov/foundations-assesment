@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
 <form id="login-form" method="POST" action="/login" class="hero centered">
   <h2 class="underline">Log in</h2>
-  {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, msg in
   messages %}
-  <p class="message success">{{ msg }}</p>
+  <p class="message {{ category }}">{{ msg }}</p>
   {% endfor %} {% endif %} {% endwith %}
   <div class="input-section">
     <label for="username" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/user.svg') }}" alt="User Icon">Username</label
