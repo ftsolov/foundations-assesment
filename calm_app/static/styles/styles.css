@@ -6,7 +6,7 @@
 
 :root {
   --white: #f5f6fa;
-  --secondary: #8692b2;
+  --secondary: #67799c;
   --dark: #1b2130;
   --light-dark: #192034;
   --accent: #f11262;
@@ -96,17 +96,18 @@ a {
 
 .button {
   background-color: var(--accent);
-  padding: 1rem 3rem;
+  padding: 1.3rem 3rem;
   color: white;
   font-size: 1rem;
   text-align: center;
   border-radius: 9999px;
   font-weight: 700;
   max-width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   letter-spacing: 0;
   transition: transform 0.3s;
-  display: inline-block;
-  line-height: 1.5;
 }
 
 .third {
@@ -127,6 +128,7 @@ a {
   position: absolute;
   top: 50px;
   left: 50px;
+  background: none;
   z-index: 1;
 }
 
@@ -357,7 +359,28 @@ p {
   top: 50px;
   right: 50px;
   border-radius: 9999px;
+  line-height: 0;
+  padding: 20px;
   background-color: #1e2840;
+}
+
+.label-auth {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.input-section .input::placeholder {
+  color: var(--secondary);
+}
+
+.label-auth label {
+  line-height: 0;
+}
+
+.icon-auth {
+  margin-right: 0.4rem;
 }
 
 /*MEDIA QUERIES*/
