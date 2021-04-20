@@ -101,13 +101,13 @@ def login():
         password = request.form.get("password")
         # check if inputs are both filled in and not blank
         if not username or not password:
-            flash("No entry data found, please fill in carefully.", 'error')
+            flash("Wrong login credentials, please try again.", 'error')
             return redirect(url_for("login"))
             # check if username exists in the database
         user_db = Users.query.filter_by(username=username).first()  # check if user already exists
 
         if user_db is None:
-            flash("User not found, please try again.", 'error')
+            flash("Wrong login credentials, please try again.", 'error')
             return redirect(url_for("login"))
         else:
             # obtain hashed password that belongs to the username and store it
@@ -171,9 +171,10 @@ def submit_new_entry():
     return redirect(url_for('dashboard'))
 
 
-@app.route('/details?id=<log_id>')
+@app.route('/details/<log_id>', methods=["GET", "POST"])
 def show_entry_details(log_id):
-    return render_template('entrydetails.html', entry_data=DailyEntries.query.filter_by(logId=log_id))
+    entry_data = DailyEntries.query.filter_by(logId=log_id).first()
+    return render_template('entry-details.html', entry_data=entry_data)
 
 
 @app.template_filter()
