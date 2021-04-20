@@ -31,6 +31,18 @@ function resetPasswordInputs() {
   passwordRepeatedField.value = "";
 }
 
+function resetEntryInputs() {
+  let entryTitle = document.getElementById("log-title")
+  let mood = document.getElementById("mood")
+  let rating = document.getElementById("rating")
+  let description = document.getElementById("description")
+
+  entryTitle.value = ""
+  mood.value = ""
+  rating.value = ""
+  description.value = ""
+}
+
 function logNewEntryAnimation() {
   let popup = document.getElementById("popup");
   if (popup.style.display === "none") {
@@ -40,7 +52,7 @@ function logNewEntryAnimation() {
   } else if (popup.style.display === "block") {
     popup.style.opacity = "0";
     setTimeout(function(){popup.style.display = "none"}, 200)
-    document.getElementById("title-entry").value = "";
+    resetEntryInputs()
   }
 }
 
