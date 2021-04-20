@@ -28,14 +28,13 @@
     ></script>
   </head>
   <body class="background center">
-    <a href="/" class="logo">
+    <button title="Home" type="button" onclick="location.href='/'" class="logo">
       <img
         src="{{ url_for('static',filename='images/logo.png') }}"
         alt="Calm logo"
         style="height: 50px"
       />
-    </a>
-    <a href="/logout" class="button subtle logout">Log out</a>
+    </button>
 {% block content %} {% endblock %}
   </body>
 </html>
