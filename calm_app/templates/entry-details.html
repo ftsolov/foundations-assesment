@@ -1,0 +1,22 @@
+{% extends'base.html' %} {% block content %}
+<button
+  onclick="location.href='/logout'"
+  title="Log Out"
+  class="button subtle logout"
+>
+  <img
+    src="{{ url_for('static', filename='icons/logout.svg') }}"
+    alt="Log out"
+  />
+</button>
+<div class="width-wrapper">
+  <div class="header">
+    <h2 class="underline">Entry details</h2>
+  </div>
+  <p>{{ entry_data.logTitle }}</p>
+  <p>{{ entry_data.logMood }}</p>
+  <p>{{ entry_data.logRating }}</p>
+  <p>{{ entry_data.logDescription }}</p>
+  <a href="{{ url_for("dashboard") }}" title="Back to dashboard" class="button subtle">Back to dashboard</a>
+</div>
+{% endblock %}
