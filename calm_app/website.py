@@ -129,7 +129,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-    # TODO: IMPLEMENT FLASHING PROPERLY IN HTML
     flash("You have been logged out.", "success")
     session.pop("userId", None)
     return redirect(url_for("login"))
@@ -179,7 +178,7 @@ def show_entry_details(log_id):
 
 @app.template_filter()
 def format_date(date: datetime):
-    return f"{date.day:02d}.{date.month:02d}.{date.year},  {date.hour:02d}:{date.minute:02d}"
+    return f"{date.day:02d}.{date.month:02d}.{date.year}"
 
 
 if __name__ == "__main__":
