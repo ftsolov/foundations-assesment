@@ -1,17 +1,49 @@
 {% extends "base.html" %} {% block content %}
-<form id="form" class="hero centered" action="/sign-up" method="POST" >
+<form id="form" class="hero centered" action="/sign-up" method="POST">
   <h2 class="underline">Sign up</h2>
 
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %} {% for category, msg in messages %}
+  <p class="message {{ category }}">{{ msg }}</p>
+  {% endfor %} {% endif %} {% endwith %}
+
   <div class="input-section">
-    <label for="username" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/user.svg') }}" alt="User Icon">Username</label
-    ><input id="username" type="text" class="input" name="username" autocomplete="off" />
+    <label for="username" class="label-auth"
+      ><img
+        class="icon-auth"
+        src="{{ url_for('static', filename='icons/user.svg') }}"
+        alt="User Icon"
+      />Username</label
+    ><input
+      id="username"
+      type="text"
+      class="input"
+      name="username"
+      autocomplete="off"
+    />
   </div>
   <div class="input-section">
-    <label for="password" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/lock.svg') }}" alt="Password icon">Password</label
-    ><input id="password" type="password" class="input" name="password" autocomplete="off" />
+    <label for="password" class="label-auth"
+      ><img
+        class="icon-auth"
+        src="{{ url_for('static', filename='icons/lock.svg') }}"
+        alt="Password icon"
+      />Password</label
+    ><input
+      id="password"
+      type="password"
+      class="input"
+      name="password"
+      autocomplete="off"
+    />
   </div>
   <div class="input-section">
-    <label for="password-repeat" class="label-auth"><img class="icon-auth" src="{{ url_for('static', filename='icons/lock.svg') }}" alt="Password icon repeat">Repeat Password</label
+    <label for="password-repeat" class="label-auth"
+      ><img
+        class="icon-auth"
+        src="{{ url_for('static', filename='icons/lock.svg') }}"
+        alt="Password icon repeat"
+      />Repeat Password</label
     ><input
       id="password-repeat"
       type="password"
