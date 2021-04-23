@@ -135,7 +135,7 @@
   {% if entries | length == 0 %}
   <div class="no-entries">No entries found 💩</div>
   {% else %} {% for entry in entries %}
-  <div class="entry" id="{{ entry.logId }}">
+  <a class="entry" id="{{ entry.logId }}" href="/details/{{ entry.logId }}">
     <div class="entry-details">
       <div class="emoji">{{ entry.logEmoji }}</div>
       <div>
@@ -143,12 +143,7 @@
         <p style="color: var(--secondary)">{{ entry.logDate | format_date }}</p>
       </div>
     </div>
-    <a
-      href="/details/{{ entry.logId }}"
-      class="button subtle"
-      title="View details"
-      >Details</a
-    >
-  </div>
+    <div class="button subtle" title="View details">Details</div>
+  </a>
   {% endfor %} {% endif %} {% endblock %}
 </div>
