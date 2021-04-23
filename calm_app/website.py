@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, session, f
 from flask_session import Session
 from calm_app.helper_functions.functions import encrypt_password, verify_password, generate_id_key
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, desc
 from sqlalchemy.orm import relationship
 from datetime import timedelta, datetime
 
@@ -140,7 +140,7 @@ def dashboard():
     if user_id is None:
         return redirect(url_for("login"))
     else:
-        entries = DailyEntries.query.filter_by(userId=user_id)
+        entries = DailyEntries.query.filter_by(userId=user_id).order_by(desc(DailyEntries.logDate))
         return render_template('dashboard.html', entries=list(entries))
 
 
