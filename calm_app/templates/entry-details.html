@@ -9,14 +9,39 @@
     alt="Log out"
   />
 </button>
-<div class="width-wrapper">
-  <div class="header">
-    <h2 class="underline">Entry details</h2>
+<div class="details-wrapper">
+  <div class="header" style="margin-bottom: 2rem;">
+    <div style="display: flex; flex-direction: row">
+      <div class="emoji-details">{{ entry_data.logEmoji }}</div>
+      <div class="text-header">
+        <h2>{{ entry_data.logTitle }}</h2>
+        <p style="color: var(--secondary); line-height: 1">
+          {{ entry_data.logDate | format_date }}
+        </p>
+      </div>
+    </div>
   </div>
-  <p>{{ entry_data.logTitle }}</p>
-  <p>{{ entry_data.logMood }}</p>
-  <p>{{ entry_data.logRating }}</p>
-  <p>{{ entry_data.logDescription }}</p>
-  <a href="{{ url_for("dashboard") }}" title="Back to dashboard" class="button subtle">Back to dashboard</a>
+  <div>
+    <div>
+    <h4 class="answer-title">Mood:</h4>
+    <p class="answer">{{ entry_data.logMood }}</p>
+  </div>
+  <div>
+    <h4 class="answer-title">Day rating:</h4>
+    <p class="answer">{{ entry_data.logRating }}</p>
+  </div>
+  </div>
+
+  <div>
+    <h4 class="answer-title">Description:</h4>
+    <p class="answer">{{ entry_data.logDescription }}</p>
+  </div>
+  <a
+    href='{{ url_for("dashboard") }}'
+    title="Back to dashboard"
+    class="button subtle"
+    style="align-self: center; margin-top: 2rem;"
+    >Back to dashboard</a
+  >
 </div>
 {% endblock %}
