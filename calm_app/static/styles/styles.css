@@ -40,7 +40,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -104,6 +104,11 @@ a {
   text-align: center;
   line-height: 1.3;
   margin-bottom: 0.5rem;
+}
+
+#description {
+  margin-bottom: 1rem;
+  color: var(--secondary);
 }
 
 .button {
@@ -186,7 +191,7 @@ a {
   align-items: center;
   justify-content: space-between;
   width: 80%;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 
 .header a {
@@ -277,9 +282,18 @@ p {
 
 .card-title {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+#feel-input {
+  margin-right: 2rem;
 }
 
 .title-entry {
+  width: 100%;
   background: none;
   color: var(--white);
   outline: none;
@@ -407,10 +421,77 @@ p {
 
 /*MEDIA QUERIES*/
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 565px) {
   .logo {
     top: 80px;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .popup {
+    width: 100%;
+  }
+
+  .new-entry-wrapper {
+    width: 100%;
+  }
+
+  .flex-horizontal {
+    flex-direction: column;
+  }
+
+  #feel-input {
+    margin-right: 0;
+  }
+
+  .input-section {
+    max-width: none;
+  }
+
+  #login-form .input-section, #form .input-section {
+    max-width: 350px;
+    width: 80%;
+  }
+
+  .hero-text {
+    font-size: 2.5rem;
+  }
+
+  #form {
+    top: 55%;
+  }
+
+  /*.emoji {*/
+  /*  display: none;*/
+  /*}*/
+
+  .button {
+    padding: 1.3rem 2rem;
+    max-width: none;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  #new-entry-button {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    margin-top: 1rem;
+  }
+
+  .entry .button {
+    display: none;
+  }
+
+  #popup .button {
+    width: 100%;
+  }
+
+  .logout {
+    padding: 20px;
+    right: 35px;
+  }
+
 }
