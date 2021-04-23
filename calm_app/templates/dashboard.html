@@ -17,7 +17,7 @@
   style="display: none; opacity: 0; transition: all 200ms ease-out"
 >
   <form method="POST" action="/submit-new-entry" class="new-entry-wrapper">
-    <div class="flex-horizontal card-title">
+    <div class="card-title">
       <label>
         <select class="emoji-container" name="emoji" id="emoji">
           <option value="😊">😊</option>
@@ -45,7 +45,7 @@
       />
     </div>
     <div class="flex-horizontal">
-      <div class="input-section" style="margin-right: 2rem">
+      <div class="input-section" id="feel-input">
         <label for="mood">How did you feel today?</label>
         <input
           id="mood"
@@ -57,14 +57,15 @@
         />
       </div>
 
-      <div class="input-section">
+      <div class="input-section" id="rating-input">
         <label for="rating">How would you rate your day?</label>
         <input
           id="rating"
           name="rating"
           type="number"
           class="input"
-          min="0" max="10"
+          min="0"
+          max="10"
           placeholder="0-10"
           autocomplete="off"
           required
@@ -118,6 +119,7 @@
       {% endif %}
     </div>
     <button
+      id="new-entry-button"
       onclick="logNewEntryAnimation()"
       class="button"
       title="Add new entry"
@@ -135,9 +137,7 @@
   {% else %} {% for entry in entries %}
   <div class="entry" id="{{ entry.logId }}">
     <div class="entry-details">
-      <div class="emoji">
-        {{ entry.logEmoji }}
-      </div>
+      <div class="emoji">{{ entry.logEmoji }}</div>
       <div>
         <p>{{ entry.logTitle }}</p>
         <p style="color: var(--secondary)">{{ entry.logDate | format_date }}</p>
