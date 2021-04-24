@@ -49,6 +49,10 @@ h1 {
   margin: 0;
 }
 
+h4 {
+  margin-bottom: 1rem;
+}
+
 h2 {
   font-size: 2.1rem;
 }
@@ -113,8 +117,15 @@ a:visited {
 
 #description {
   margin-bottom: 1rem;
-  max-width: 400px;
+  /*max-width: 400px;*/
   color: var(--secondary);
+}
+
+.details-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
@@ -363,8 +374,9 @@ p {
 
 .answer {
   padding: 1rem;
-  background-color: var(--light-dark);
   border-radius: 12px;
+  border: 2px solid #212b46;
+  width: fit-content;
 }
 
 .answer-title {

@@ -5,12 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey, desc
 from sqlalchemy.orm import relationship
 from datetime import timedelta, datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = "safari"
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres{os.environ.get("DB_PASSWORD")}@34.89.139.25:5432/postgres'
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
@@ -38,9 +40,9 @@ class DailyEntries(db.Model):
     logEmoji = db.Column(db.String(), nullable=False)
     logTitle = db.Column(db.String(60), nullable=False)
     logDate = db.Column(db.DateTime(), nullable=False)
-    logMood = db.Column(db.String(15), nullable=False)
+    logMood = db.Column(db.String(), nullable=False)
     logRating = db.Column(db.Integer(), nullable=False)
-    logDescription = db.Column(db.String(255), nullable=True)
+    logDescription = db.Column(db.String(), nullable=True)
 
     def __init__(self, userId, logId, logEmoji, logTitle, logDate, logMood, logRating, logDescription):
         self.userId = userId
@@ -162,7 +164,6 @@ def submit_new_entry():
     log_rating = request.form.get("rating")
     log_description = request.form.get("description")
     user_id = session.get("userId")
-    # TODO: FIGURE OUT HOW TO PASS IN USER ID
     log_info = DailyEntries(userId=user_id, logId=log_id, logEmoji=log_emoji, logTitle=log_title, logDate=log_date,
                             logMood=log_mood, logRating=log_rating, logDescription=log_description)
     db.session.add(log_info)
