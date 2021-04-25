@@ -8,10 +8,12 @@ from datetime import timedelta, datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = "safari"
+app.secret_key = "sgjreiog8434tfgw"
+app.config['SECRET_KEY'] = 'sgjreiog8434tfgw'
 app.config['SESSION_TYPE'] = 'sqlalchemy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:database123@localhost/calmdatabase'
+# THIS BELOW FAILS PYTEST FIGURE OUT HOW TO PASS THE PASSWORD TO IT
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{os.environ.get("DB_PASSWORD")}@34.89.139.25:5432/postgres'
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
