@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
-from flask_session import Session
 from calm_app.helper_functions.functions import encrypt_password, verify_password, generate_id_key
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey, desc
@@ -19,8 +18,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:mAliH3amCvivPG9E@
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
-
-Session(app)
 
 
 class Users(db.Model):

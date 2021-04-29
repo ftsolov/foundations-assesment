@@ -1,4 +1,4 @@
-from calm_app.website import app
+from ..website import app
 
 
 def test_index():
