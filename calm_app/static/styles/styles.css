@@ -166,6 +166,11 @@ a:visited {
   z-index: 1;
 }
 
+.landing-desc {
+  max-width: 400px;
+  color: var(--secondary);
+}
+
 .small-text {
   color: var(--secondary);
   max-width: 30ch;
@@ -380,7 +385,7 @@ p {
 }
 
 .answer-title {
-  color: var(--secondary)
+  color: var(--secondary);
 }
 
 .flex-horizontal {
@@ -462,6 +467,9 @@ p {
   background: var(--light-dark);
   padding: 0.4rem 0.8rem;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  max-height: 70px;
 }
 
 /*MEDIA QUERIES*/
@@ -533,6 +541,10 @@ p {
 
   #popup .button {
     width: 100%;
+  }
+
+  .landing-desc {
+    max-width: 280px;
   }
 
   .logout {
