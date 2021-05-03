@@ -7,12 +7,11 @@ from datetime import timedelta, datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = "sgjreiog8434tfgw"
-app.config['SECRET_KEY'] = 'sgjreiog8434tfgw'
+app.secret_key = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.config['SESSION_TYPE'] = 'sqlalchemy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{os.environ.get("DB_PASSWORD")}@34.89.139.25:5432/postgres'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:mAliH3amCvivPG9E@34.89.139.25:5432/postgres'
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
@@ -75,7 +74,7 @@ def signup():
         existing_user = Users.query.filter_by(username=username).first()  # check if user already exists
         if existing_user is None:  # if user doesnt exist, create a new user in the database
             unique_user_id = generate_id_key()  # creates a random 8 character user ID
-            encrypted_password = encrypt_password(password)
+            encrypted_password = encrypt_password(password)  # encrypts password
             user_info = Users(userId=unique_user_id, username=username, password=encrypted_password)
             db.session.add(user_info)
             db.session.commit()
@@ -85,7 +84,6 @@ def signup():
         else:
             session["username"] = existing_user.username
             return redirect(url_for('login'))
-            # TODO: HANDLE ERROR
     else:
         return render_template('signup.html')
 
@@ -142,13 +140,6 @@ def dashboard():
     else:
         entries = DailyEntries.query.filter_by(userId=user_id).order_by(desc(DailyEntries.logDate))
         return render_template('dashboard.html', entries=list(entries))
-
-
-#
-# @app.route('/fetch-daily-entries')
-# def fetch_daily_entries():
-#     # TODO: FIGURE OUT HOW TO FETCH THE ENTRIES OF THE USER
-#     pass
 
 
 @app.route('/submit-new-entry', methods=["POST"])
