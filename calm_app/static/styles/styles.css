@@ -488,9 +488,10 @@ p {
 
 @media only screen and (max-width: 565px) {
   .logo {
-    top: 80px;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /*top: 80px;*/
+    display: none;
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
   }
 
   .popup {
