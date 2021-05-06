@@ -45,7 +45,11 @@ You should have:
 
 
 ### Launching the app
-- Activate your virtual environment (instructions can be found at the top of this readme)
+**- Activate your virtual environment for this project:** 
+   
+    macOS/Linux: `source venv/bin/activate`
+
+    Windows: `venv\Scripts\activate.bat`
 
 
 - Run the local development server and make sure it all works. Instructions can be found at the top of this readme for using Flask's built in development server. Alternatively (only on macOS or Linux), you can use the command `uwsgi` to start your development server: 
