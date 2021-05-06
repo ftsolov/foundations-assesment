@@ -11,7 +11,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.config['SESSION_TYPE'] = 'sqlalchemy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{os.environ.get("DB_PASSWORD")}@34.89.139.25:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{os.environ.get("DB_PASSWORD")}@34.107.48.90:5432/postgres'
 app.debug = True
 app.permanent_session_lifetime = timedelta(days=1)
 db = SQLAlchemy(app)
